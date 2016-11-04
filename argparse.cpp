@@ -132,6 +132,12 @@ std::unordered_map<int, std::string> argparse (
 		
 		option o = get_option_by_shortname(options, shortname);
 
+		if(o.id == -1){
+		    // unknown short option, print error
+		    std::cerr<<"ERROR: unknown short option: -"<<shortname<<"\n";
+		    return error;
+		}
+
 		std::string sub_argument = "";
 		
 		if(o.has_sub_argument){
@@ -171,7 +177,14 @@ std::unordered_map<int, std::string> argparse (
 	    }
 	    case longArg:{
 		std::string longname = arguments[i].substr(pos);
+
 		option o = get_option_by_longname(options, longname);
+
+		if(o.id == -1){
+		    // unknown short option, print error
+		    std::cerr<<"ERROR: unknown long option: --"<<longname<<"\n";
+		    return error;
+		}
 		
 		// long arg always fills the argument block, because there has to be
 		// a space after the argument name.

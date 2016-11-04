@@ -53,7 +53,7 @@ Pascal Sommer, November 2016
 
 
 struct option{
-  unsigned int id;
+  int id;
   std::string shortname;
   std::string longname;
   bool has_sub_argument;
