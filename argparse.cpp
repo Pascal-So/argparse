@@ -83,7 +83,8 @@ std::unordered_map<int, std::string> argparse (
     
     // the current state of the parser: this will start at noArg,
     // then change to shortArg or longArg if one or two dashes are
-    // found, and back to noArg after that.
+    // found, and back to noArg after the short or long args with
+    // their sub-args.
     state current_state = noArg;
 
     // bash has already split up the arguments accordingly,
