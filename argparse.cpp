@@ -104,6 +104,7 @@ std::unordered_map<int, std::string> argparse (
 		    // starts with a dash. Either beginning of short
 		    // or long arg.
 		    if(pos < argstrlen-2 && arguments[i][pos+1] == '-'){
+			++pos;
 			current_state = longArg;
 		    }else{
 			current_state = shortArg;
