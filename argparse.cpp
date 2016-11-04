@@ -94,8 +94,6 @@ std::unordered_map<int, std::string> argparse (
 	
 	int argstrlen = arguments[i].length();
 	
-	//std::cout<<argument<<"\n";
-	
 	// pos is the current position in the argument string.
 	for(int pos = 0; pos<argstrlen; ++pos){
 	    switch (current_state){
@@ -169,8 +167,11 @@ std::unordered_map<int, std::string> argparse (
 			}
 			
 		    }else{
+			++pos;
 			// read until the end of current string
 			sub_argument = arguments[i].substr(pos);
+
+			pos = argstrlen;
 		    }
 		}
 
