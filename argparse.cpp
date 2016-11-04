@@ -89,6 +89,8 @@ std::unordered_map<int, std::string> argparse (
     // bash has already split up the arguments accordingly,
     // so we don't need to worry about whitespace.
     for(int i = 0; i < arguments.size(); ++i){
+
+	current_state = noArg;
 	
 	int argstrlen = arguments[i].length();
 	
@@ -169,11 +171,6 @@ std::unordered_map<int, std::string> argparse (
 			// read until the end of current string
 			sub_argument = arguments[i].substr(pos);
 		    }
-		    current_state = noArg;
-		}else{
-		    if(pos == argstrlen -1){
-			current_state = noArg;
-		    }
 		}
 
 		result[o.id] = sub_argument;
@@ -216,7 +213,6 @@ std::unordered_map<int, std::string> argparse (
 
 		result[o.id] = sub_argument;
 
-		current_state = noArg;
 		break;
 	    }
 	    }
