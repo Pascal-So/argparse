@@ -39,6 +39,11 @@ int main(int argc, char * argv[]){
     
     auto result = argparse(options, argc, argv);
 
+    if(result.find(-1) != result.end()){
+      cout<<"The parser encountered an error. See stderr for details.\n";
+      return 1;
+    }
+    
     for(auto kv:result){
 	cout<<kv.first << " - " << kv.second<<"\n";
     }

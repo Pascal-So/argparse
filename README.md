@@ -84,3 +84,6 @@ $ ./prog -ri fileA
 0 - fileA
 2 - 
 ```
+
+## Error handling
+In case of an error, `argparse` prints an error message to stderr and returns an unordered_map with just a single key-value pair: `{-1, "ERROR"}`.
