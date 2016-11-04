@@ -4,17 +4,6 @@
 #include <vector>
 #include "argparse.h"
 
-void replaceAll( string &s, const string &search, const string &replace ) {
-    for( size_t pos = 0; ; pos += replace.length() ) {
-        // Locate the substring to replace
-        pos = s.find( search, pos );
-        if( pos == string::npos ) break;
-        // Replace by erasing and inserting
-        s.erase( pos, search.length() );
-        s.insert( pos, replace );
-    }
-}
-
 int get_id_by_shortname(std::vector<option> & options, std::string shortname){
     for(auto & o:options){
 	if(o.shortname == shortname){
@@ -48,17 +37,17 @@ std::vector<int> find_unnamed_options(std::vector<option> & options){
     return unnamed;
 }
 
-std::string concat_arguments(int argc, char *argv[]){
-    std::string arguments = "";
+
+// convert the array of c strings to an std::vector
+// of std::strings, ignoring the first element in
+// the array.
+std::vector<std::string> convert_arguments(int argc, char *argv[]){
+    std::vector<std::string> arguments;
     for(int i = 1; i < argc; ++i){
-	std::string arg = argv[i];
-	replaceAll(arg, " ", "\ ");
-	arguments += arg + " ";
+	arguments.push_back(argv[i]);
     }
     
-    // remove the space at the end
-    int len = arguments.length() -1;  
-    return arguments.substr(0,len);
+    return arguments;
 }
 
 
@@ -69,7 +58,7 @@ std::unordered_map<int, std::string> argparse (
 					       )
 {
     
-    std::string arguments = concat_arguments(argc, argv);
+    std::vector<std::string> arguments = convert_arguments(argc, argv);
     
     std::vector<int> unnamed_options = find_unnamed_options(options);
 
