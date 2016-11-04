@@ -152,7 +152,8 @@ std::unordered_map<int, std::string> argparse (
 			}
 			
 			// move pointer to the end of new argument block
-			pos = arguments[i].length();
+			argstrlen = arguments[i].length();
+			pos = argstrlen;
 			
 			sub_argument = arguments[i];
 
@@ -167,12 +168,16 @@ std::unordered_map<int, std::string> argparse (
 		    }else{
 			// read until the end of current string
 			sub_argument = arguments[i].substr(pos);
-		    }   
+		    }
+		    current_state = noArg;
+		}else{
+		    if(pos == argstrlen -1){
+			current_state = noArg;
+		    }
 		}
 
 		result[o.id] = sub_argument;
 		
-		current_state = noArg;
 		break;
 	    }
 	    case longArg:{
@@ -196,7 +201,8 @@ std::unordered_map<int, std::string> argparse (
 		}
 		
 		// move pointer to the end of new argument block
-		pos = arguments[i].length();
+		argstrlen = arguments[i].length();
+		pos = argstrlen;
 
 		std::string sub_argument = arguments[i];
 
