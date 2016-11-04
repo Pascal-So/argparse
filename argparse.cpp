@@ -75,7 +75,7 @@ std::unordered_map<int, std::string> argparse (
     // this index will iterate over the unnamed_options. If
     // the arguments contain too many unnamed options, an error
     // is printed out to stderr.
-    int current_unnamed_option;
+    int current_unnamed_option = 0;
 
     // what kind of option type are we currently reading
     // while looping through the arguments string?
@@ -182,7 +182,8 @@ std::unordered_map<int, std::string> argparse (
 	    }
 	    case longArg:{
 		std::string longname = arguments[i].substr(pos);
-
+		pos = argstrlen;
+		
 		option o = get_option_by_longname(options, longname);
 
 		if(o.id == -1){
@@ -190,30 +191,33 @@ std::unordered_map<int, std::string> argparse (
 		    std::cerr<<"ERROR: unknown long option: --"<<longname<<"\n";
 		    return error;
 		}
+
+		std::string sub_argument = "";
 		
-		// long arg always fills the argument block, because there has to be
-		// a space after the argument name.
-		++i;
-		if(i == arguments.size()){
-		    // reached end of argument blocks, print error
-		    std::cerr<<"ERROR: missing sub-argument for --"<<longname<<"\n";
-		    return error;
-		}
+		if(o.has_sub_argument){
+		    // long arg always fills the argument block, because there has to be
+		    // a space after the argument name.
+		    ++i;
+		    if(i == arguments.size()){
+			// reached end of argument blocks, print error
+			std::cerr<<"ERROR: missing sub-argument for --"<<longname<<"\n";
+			return error;
+		    }
 		
-		// move pointer to the end of new argument block
-		argstrlen = arguments[i].length();
-		pos = argstrlen;
+		    // move pointer to the end of new argument block
+		    argstrlen = arguments[i].length();
+		    pos = argstrlen;
 
-		std::string sub_argument = arguments[i];
+		    sub_argument = arguments[i];
 
-		// test if this really is a sub-argument or a new argument
-		// instruction:
-		if(sub_argument[0] == '-'){
-		    // no sub-argument give, print error
-		    std::cerr<<"ERROR: missing sub-argument for --"<<longname<<"\n";
-		    return error;
+		    // test if this really is a sub-argument or a new argument
+		    // instruction:
+		    if(sub_argument[0] == '-'){
+			// no sub-argument give, print error
+			std::cerr<<"ERROR: missing sub-argument for --"<<longname<<"\n";
+			return error;
+		    }
 		}
-
 		result[o.id] = sub_argument;
 
 		break;

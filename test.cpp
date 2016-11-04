@@ -37,7 +37,7 @@ int main(int argc, char * argv[]){
     options.push_back({5, "e", "else", true});      // -o or --else, requiring sub-argument
     options.push_back({6, "", "", true});           // unnamed option
     
-    auto result = argparse(v, argc, argv);
+    auto result = argparse(options, argc, argv);
 
     for(auto kv:result){
 	cout<<kv.first << " - " << kv.second<<"\n";
