@@ -1,3 +1,5 @@
 *~
 test
 argparse
+*.gch
+*.o
