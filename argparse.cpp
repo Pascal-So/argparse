@@ -2,7 +2,7 @@
 #include <unordered_map>
 #include <string>
 #include <vector>
-#include "argparse.h"
+#include "argparse.hpp"
 
 option get_option_by_shortname(std::vector<option> & options, std::string shortname){
     for(auto & o:options){
@@ -75,7 +75,7 @@ std::unordered_map<int, std::string> argparse (
     // this index will iterate over the unnamed_options. If
     // the arguments contain too many unnamed options, an error
     // is printed out to stderr.
-    int current_unnamed_option = 0;
+    size_t current_unnamed_option = 0;
 
     // what kind of option type are we currently reading
     // while looping through the arguments string?
@@ -89,7 +89,7 @@ std::unordered_map<int, std::string> argparse (
 
     // bash has already split up the arguments accordingly,
     // so we don't need to worry about whitespace.
-    for(int i = 0; i < arguments.size(); ++i){
+    for(size_t i = 0; i < arguments.size(); ++i){
 
 	current_state = noArg;
 	
