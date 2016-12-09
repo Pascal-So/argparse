@@ -8,7 +8,7 @@ Note that my naming conventions differ a bit from the standart:
 ## Limitations and advantages
 To get it out of the way upfront, this library has some limitations:
 * Doesn't allow the same argument to be passed multiple times.
-* Doesn't allow the character - as a standalone argument.
+* Doesn't allow the character `-` as a standalone argument.
 
 But also some advantages:
 * Lighter than boost or other alternative
@@ -19,7 +19,7 @@ But also some advantages:
 
 First, include the library:
 ```c++
-#include "argparse.h"
+#include "path/to/argparse.hpp"
 ```
 
 The library introduces a struct called `option`, which lets the user describe an expected command line option. It contains the following fields:
@@ -70,9 +70,16 @@ for(auto r:result){
 }
 ```
 
-First we have to compile the program. Assuming that the code is saved in `prog.cpp` and that the files `argparse.h` and `argparse.cpp` are in the same directory:
-```c++
-g++ -std=c++11 -o prog prog.cpp argparse.h argparse.cpp
+## Compiling
+
+To compile anything with argparse, we first have to run the makefile in the argparse directory:
+```bash
+make -C path/to/argparse	
+```
+
+Then, we can compile the program. Assuming that the code is saved in `prog.cpp` and that the file `argparse.o` is in the subdirectory `argparse/`:
+```bash
+g++ -std=c++11 -o prog prog.cpp argparse/argparse.o
 ```
 
 After that, we can run the program like this:
